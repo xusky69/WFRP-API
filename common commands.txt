@@ -1,0 +1,18 @@
+### Run jupyter notebook wrapped inside manage.py
+### medium.com/ayuth/how-to-use-django-in-jupyter-notebook-561ea2401852
+### https://stackoverflow.com/questions/68059796/how-to-connect-jupyter-lab-in-my-django-project-to-the-djangos-models
+# python manage.py shell_plus --notebook
+
+### WFRP_API test image building:
+# sudo docker build -t wfrp_api:test --build-arg test=TRUE .
+
+### delete docker dangling images
+# docker rmi -f $(docker images -f "dangling=true" -q)
+
+### retrieve all permissions for a given Model in django:
+# https://stackoverflow.com/questions/38391729/how-to-retrieve-all-permissions-of-a-specific-model-in-django
+# from django.contrib.auth.models import Permission
+# from django.contrib.contenttypes.models import ContentType
+# content_type = ContentType.objects.get_for_model(Company)
+# all_permissions = Permission.objects.filter(content_type=content_type)
+# [item.codename for item in all_permissions]

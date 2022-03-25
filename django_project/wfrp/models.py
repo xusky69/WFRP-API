@@ -172,6 +172,7 @@ class PlayableCharacter(models.Model):
 class Spell(models.Model):
   name = models.CharField(max_length=32, blank=True, default='')
   uuid = models.UUIDField(default=uuid4, editable=False)
+  user = models.ForeignKey(User, related_name='spell', on_delete=models.CASCADE)
   creation_date = models.DateTimeField(auto_now_add=True)
   last_updated = models.DateTimeField(auto_now=True)
   character = models.ForeignKey(PlayableCharacter, related_name='spell', on_delete=models.CASCADE)
@@ -185,6 +186,7 @@ class Spell(models.Model):
 class Talent(models.Model):
   name = models.CharField(max_length=32, blank=True, default='')
   uuid = models.UUIDField(default=uuid4, editable=False)
+  user = models.ForeignKey(User, related_name='talent', on_delete=models.CASCADE)
   creation_date = models.DateTimeField(auto_now_add=True)
   last_updated = models.DateTimeField(auto_now=True)
   character = models.ForeignKey(PlayableCharacter, related_name='talent', on_delete=models.CASCADE)
@@ -205,6 +207,7 @@ class Item(models.Model):
   
   name = models.CharField(max_length=32, blank=True, default='')
   uuid = models.UUIDField(default=uuid4, editable=False)
+  user = models.ForeignKey(User, related_name='item', on_delete=models.CASCADE)
   creation_date = models.DateTimeField(auto_now_add=True)
   last_updated = models.DateTimeField(auto_now=True)
   character = models.ForeignKey(PlayableCharacter, related_name='item', on_delete=models.CASCADE)

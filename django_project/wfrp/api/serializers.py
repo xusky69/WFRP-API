@@ -1,5 +1,7 @@
 from rest_framework import serializers
-from wfrp.models import Campaign, JournalEntry
+from wfrp.models import (Campaign, Item, JournalEntry, PlayableCharacter,
+                         Spell, Talent)
+
 
 class CampaignSerializer(serializers.ModelSerializer):
     master = serializers.StringRelatedField()
@@ -15,4 +17,11 @@ class JournalEntrySerializer(serializers.ModelSerializer):
     
     class Meta:
         model = JournalEntry
+        exclude = ['id']
+
+class PlayableCharacterSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()
+
+    class Meta:
+        model = PlayableCharacter
         exclude = ['id']

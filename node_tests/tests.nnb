@@ -1,0 +1,25 @@
+{
+    "cells": [
+        {
+            "language": "typescript",
+            "source": [
+                "const axios = require('axios');\nconst response = await axios.get('https://rickandmortyapi.com/api/character/185')"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                ""
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                ""
+            ],
+            "outputs": []
+        }
+    ]
+}

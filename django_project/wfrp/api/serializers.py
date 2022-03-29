@@ -21,7 +21,9 @@ class JournalEntrySerializer(serializers.ModelSerializer):
 
 class PlayableCharacterSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
-
+    campaign = serializers.SlugRelatedField(slug_field='uuid',
+                                            queryset=Campaign.objects.all())
+                                            
     class Meta:
         model = PlayableCharacter
         exclude = ['id']

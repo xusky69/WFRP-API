@@ -41,6 +41,7 @@ class JournalEntry(models.Model):
 class PlayableCharacter(models.Model):
   uuid = models.UUIDField(default=uuid4, editable=False)
   user = models.ForeignKey(User, related_name='character', on_delete=models.CASCADE)
+  campaign = models.ForeignKey(Campaign, related_name='party_character', on_delete=models.CASCADE)
   creation_date = models.DateTimeField(auto_now_add=True)
   last_updated = models.DateTimeField(auto_now=True)
   

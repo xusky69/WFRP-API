@@ -34,6 +34,7 @@ class JournalEntry(models.Model):
   class Meta:
     verbose_name = "journal entry"
     verbose_name_plural = "journal entries"
+    
 
   def __str__(self) -> str:
     return f'{self.name}_{self.campaign}_{self.uuid}'
@@ -166,6 +167,7 @@ class PlayableCharacter(models.Model):
   class Meta:
     verbose_name = 'playable character'
     verbose_name_plural = 'playable characters'
+    unique_together = ('user', 'campaign') 
 
   def __str__(self) -> str:
     return f'{self.name}_{self.uuid}'

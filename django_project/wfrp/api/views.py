@@ -23,7 +23,8 @@ class JournalEntryViewSet(viewsets.ModelViewSet):
     lookup_field = "uuid"
     queryset = JournalEntry.objects.all().order_by("-creation_date")
     permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
-    
+    filterset_fields = ('campaign__uuid',)
+
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 

@@ -1,0 +1,16 @@
+version: "3"
+services:
+  django:
+    image: wfrp:test
+    ports:
+      - "8000:8000"
+    depends_on:
+      - "postgres"
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: djangouser
+      POSTGRES_PASSWORD: obo69
+      POSTGRES_DB: djangodb
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data 

@@ -1,0 +1,8 @@
+TIME_ZONE='America/Bogota'
+DEBUG=FALSE
+PRODUCTION=TRUE
+
+DB_NAME=djangodb
+DB_USER=djangouser
+DB_PSWD=obo69
+DB_HOST=postgres

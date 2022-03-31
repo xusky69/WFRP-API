@@ -1,0 +1,5 @@
+postgres-data
+other
+venv
+.git
+django_project/media_root

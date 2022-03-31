@@ -4,7 +4,7 @@
 # python manage.py shell_plus --notebook
 
 ### WFRP_API test image building:
-# sudo docker build -t wfrp_api:test --build-arg test=TRUE .
+# sudo docker build -t wfrp:test --build-arg test=TRUE .
 
 ### delete docker dangling images
 # docker rmi -f $(docker images -f "dangling=true" -q)

@@ -2,7 +2,7 @@
 ARG test=FALSE
 
 # set base image (host OS)
-FROM python:3.9 as base
+FROM python:3.10 as base
 
 # set working dir to root of the django project
 WORKDIR /home/WFRP/

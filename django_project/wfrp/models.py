@@ -6,6 +6,7 @@ from users.models import User
 
 class Campaign(models.Model):
   name = models.CharField(max_length=32, blank=True, default='')
+  cover_image = models.ImageField(upload_to=settings.MEDIA_ROOT, blank=True, null=True)
   master = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='campaigns', on_delete=models.CASCADE)
   uuid = models.UUIDField(default=uuid4, editable=False)
   description = models.TextField(default="Enter a description for your campaign")

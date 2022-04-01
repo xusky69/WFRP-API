@@ -1,7 +1,7 @@
 TIME_ZONE='America/Bogota'
 DEBUG=FALSE
 PRODUCTION=TRUE
-
+CLOUD_MEDIA=TRUE
 DB_NAME=djangodb
 DB_USER=djangouser
 DB_PSWD=obo69

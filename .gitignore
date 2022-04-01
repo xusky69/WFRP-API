@@ -130,3 +130,4 @@ dmypy.json
 
 # custom
 postgres-data
+django_project/local_env_vars

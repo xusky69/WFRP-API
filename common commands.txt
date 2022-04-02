@@ -3,3 +3,8 @@
 
 ### delete docker dangling images
 # docker rmi -f $(docker images -f "dangling=true" -q)
+
+### Run jupyter notebook wrapped inside manage.py
+### medium.com/ayuth/how-to-use-django-in-jupyter-notebook-561ea2401852
+### https://stackoverflow.com/questions/68059796/how-to-connect-jupyter-lab-in-my-django-project-to-the-djangos-models
+# python manage.py shell_plus --notebook

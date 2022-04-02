@@ -49,7 +49,9 @@ class PlayableCharacter(models.Model):
   
   ### general stuff
   name = models.CharField(max_length=32)
+  character_avatar = models.ImageField(upload_to=settings.MEDIA_ROOT, blank=True, null=True)
   species = models.CharField(max_length=32, blank=True, default='')
+  character_class = models.CharField(max_length=32, blank=True, default='')
   career = models.CharField(max_length=32, blank=True, default='')
   career_level = models.CharField(max_length=32, blank=True, default='')
   career_path = models.CharField(max_length=32, blank=True, default='')
@@ -91,11 +93,11 @@ class PlayableCharacter(models.Model):
   ### resilience
   resilience = models.IntegerField(default=0)
   resolve = models.IntegerField(default=0)
-  motivation = models.IntegerField(default=0)
+  motivation_value = models.IntegerField(default=0)
 
   ### experience
-  current = models.IntegerField(default=0)
-  spent = models.IntegerField(default=0)
+  current_experience = models.IntegerField(default=0)
+  spent_experience = models.IntegerField(default=0)
 
   ### movement
   movement = models.IntegerField(default=0)

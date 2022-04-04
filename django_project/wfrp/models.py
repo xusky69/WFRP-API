@@ -54,7 +54,7 @@ class PlayableCharacter(models.Model):
   character_class = models.CharField(max_length=32, blank=True, default='')
   career = models.CharField(max_length=32, blank=True, default='')
   career_level = models.CharField(max_length=32, blank=True, default='')
-  career_path = models.CharField(max_length=32, blank=True, default='')
+  career_path = models.TextField(blank=True, default='')
   status = models.CharField(max_length=32, blank=True, default='')
   age = models.CharField(max_length=32, blank=True, default='')
   height = models.CharField(max_length=32, blank=True, default='')
@@ -122,6 +122,7 @@ class PlayableCharacter(models.Model):
   ### basic skills
   gossip = models.IntegerField(default=0)
   haggle = models.IntegerField(default=0)
+  heal = models.IntegerField(default=0)
   intimidate = models.IntegerField(default=0)
   intuition = models.IntegerField(default=0)
   leadership = models.IntegerField(default=0)
@@ -154,6 +155,7 @@ class PlayableCharacter(models.Model):
   wealth = models.IntegerField(default=0)
 
   ### wounds
+  max_wounds = models.IntegerField(default=0)
   wounds = models.IntegerField(default=0)
 
   ### armour points

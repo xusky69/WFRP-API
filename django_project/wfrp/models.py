@@ -203,7 +203,7 @@ class Spell(models.Model):
 
     tn = models.IntegerField(default=0)
     spell_range = models.IntegerField(default=0)  # -1 means self
-    targets = models.IntegerField(default=0)  # -1 means self
+    target = models.IntegerField(default=0)  # -1 means self
     duration = models.IntegerField(default=0)
     description = models.TextField(blank=True, default='')
     effect = models.TextField(blank=True, default='')
@@ -230,6 +230,8 @@ class Talent(models.Model):
         verbose_name = 'talent'
         verbose_name_plural = 'talents'
 
+    def __str__(self) -> str:
+        return f'{self.name}_{self.character}_{self.uuid}'
 
 class AdvancedSkill(models.Model):
     CHARACTERISTICS = [
@@ -264,6 +266,8 @@ class AdvancedSkill(models.Model):
         verbose_name = 'advanced skill'
         verbose_name_plural = 'advanced skills'
 
+    def __str__(self) -> str:
+        return f'{self.name}_{self.character}_{self.uuid}'
 
 class Item(models.Model):
     ITEM_CHOICES = [('consumable', 'consumable'),
@@ -333,8 +337,8 @@ class Weapon(models.Model):
     # effect = models.TextField(blank=True, default='')
 
     class Meta:
-        verbose_name = 'armor item'
-        verbose_name_plural = 'armour items'
+        verbose_name = 'weapon'
+        verbose_name_plural = 'weapons'
 
     def __str__(self) -> str:
         return f'{self.name}_{self.character}_{self.uuid}'

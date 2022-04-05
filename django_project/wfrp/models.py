@@ -60,6 +60,8 @@ class PlayableCharacter(models.Model):
     name = models.CharField(max_length=32)
     character_avatar = models.ImageField(
         upload_to=settings.MEDIA_ROOT, blank=True, null=True)
+    character_picture = models.ImageField(
+        upload_to=settings.MEDIA_ROOT, blank=True, null=True)
     species = models.CharField(max_length=32, blank=True, default='')
     character_class = models.CharField(max_length=32, blank=True, default='')
     career = models.CharField(max_length=32, blank=True, default='')

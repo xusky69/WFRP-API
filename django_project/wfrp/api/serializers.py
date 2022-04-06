@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from wfrp.models import (AdvancedSkill, Armour, Campaign, Item, JournalEntry,
+from wfrp.models import (AdvancedSkill, Armour, Campaign, Creature,
+                         CreatureTrait, Item, JournalEntry, Memory,
                          PlayableCharacter, Spell, Talent, Weapon)
 
 
@@ -88,4 +89,34 @@ class AdvancedSkillSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AdvancedSkill
+        exclude = ['id']
+
+
+class MemorySerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()
+    campaign = serializers.SlugRelatedField(slug_field='uuid',
+                                            queryset=Campaign.objects.all())
+
+    class Meta:
+        model = Memory
+        exclude = ['id']
+
+
+class CreatureSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()
+    campaign = serializers.SlugRelatedField(slug_field='uuid',
+                                            queryset=Campaign.objects.all())
+
+    class Meta:
+        model = Creature
+        exclude = ['id']
+
+
+class CreatureTraitSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()
+    campaign = serializers.SlugRelatedField(slug_field='uuid',
+                                            queryset=Campaign.objects.all())
+
+    class Meta:
+        model = CreatureTrait
         exclude = ['id']

@@ -235,6 +235,7 @@ class Talent(models.Model):
     def __str__(self) -> str:
         return f'{self.name}_{self.character}_{self.uuid}'
 
+
 class AdvancedSkill(models.Model):
     CHARACTERISTICS = [
         ('weapon_skill', 'weapon_skill'),
@@ -270,6 +271,7 @@ class AdvancedSkill(models.Model):
 
     def __str__(self) -> str:
         return f'{self.name}_{self.character}_{self.uuid}'
+
 
 class Item(models.Model):
     ITEM_CHOICES = [('consumable', 'consumable'),
@@ -320,6 +322,7 @@ class Armour(models.Model):
     def __str__(self) -> str:
         return f'{self.name}_{self.character}_{self.uuid}'
 
+
 class Weapon(models.Model):
     name = models.CharField(max_length=32, blank=True, default='')
     uuid = models.UUIDField(default=uuid4, editable=False)
@@ -330,10 +333,10 @@ class Weapon(models.Model):
     character = models.ForeignKey(
         PlayableCharacter, related_name='weapon', on_delete=models.CASCADE)
 
-    group = models.CharField( max_length=32, blank=True, default='')
+    group = models.CharField(max_length=32, blank=True, default='')
     encumbrance = models.IntegerField(default=0)
-    weapon_range = models.CharField( max_length=32, blank=True, default='')
-    damage = models.CharField( max_length=32, blank=True, default='')
+    weapon_range = models.CharField(max_length=32, blank=True, default='')
+    damage = models.CharField(max_length=32, blank=True, default='')
     qualities = models.TextField(blank=True, default='')
     description = models.TextField(blank=True, default='')
     # effect = models.TextField(blank=True, default='')
@@ -344,3 +347,89 @@ class Weapon(models.Model):
 
     def __str__(self) -> str:
         return f'{self.name}_{self.character}_{self.uuid}'
+
+
+class Memory(models.Model):
+    uuid = models.UUIDField(default=uuid4, editable=False)
+    user = models.ForeignKey(
+        User, related_name='memory', on_delete=models.CASCADE)
+    campaign = models.ForeignKey(
+        Campaign, related_name='memory', on_delete=models.CASCADE)
+    creation_date = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
+    name = models.CharField(max_length=32)
+    description = models.TextField(blank=True, default='')
+    memory_picture = models.ImageField(
+        upload_to=settings.MEDIA_ROOT, blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'memory'
+        verbose_name_plural = 'memories'
+
+    def __str__(self) -> str:
+        return f'{self.name}_{self.uuid}'
+
+
+class CreatureTrait(models.Model):
+    name = models.CharField(max_length=32, blank=True, default='')
+    uuid = models.UUIDField(default=uuid4, editable=False)
+    user = models.ForeignKey(
+        User, related_name='creature_trait', on_delete=models.CASCADE)
+    campaign = models.ForeignKey(
+        Campaign, related_name='creature_trait', on_delete=models.CASCADE)
+    creation_date = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
+    # creature = models.ForeignKey(
+    #     PlayableCharacter, related_name='talent', on_delete=models.CASCADE)
+    is_optional = models.BooleanField(default=False)
+    value = models.CharField(max_length=32, blank=True, default='')
+    description = models.TextField(blank=True, default='')
+    # effect = models.TextField(blank=True, default='')
+
+    class Meta:
+        verbose_name = 'creature trait'
+        verbose_name_plural = 'creature traits'
+
+    def __str__(self) -> str:
+        return f'{self.name}_{self.uuid}'
+
+
+class Creature(models.Model):
+    uuid = models.UUIDField(default=uuid4, editable=False)
+    user = models.ForeignKey(
+        User, related_name='creature', on_delete=models.CASCADE)
+    campaign = models.ForeignKey(
+        Campaign, related_name='creature', on_delete=models.CASCADE)
+    creation_date = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
+    traits = models.ManyToManyField(
+        to=CreatureTrait,
+        related_name='creature_traits',
+        blank=True)
+
+    # general stuff
+    name = models.CharField(max_length=32)
+    creature_picture = models.ImageField(
+        upload_to=settings.MEDIA_ROOT, blank=True, null=True)
+    description = models.TextField(blank=True, default='')
+    movement = models.IntegerField(default=0)
+
+    # stats
+    weapon_skill = models.IntegerField(default=0)
+    ballistic_skill = models.IntegerField(default=0)
+    strength = models.IntegerField(default=0)
+    toughness = models.IntegerField(default=0)
+    initiative = models.IntegerField(default=0)
+    agility = models.IntegerField(default=0)
+    dexterity = models.IntegerField(default=0)
+    intelligence = models.IntegerField(default=0)
+    willpower = models.IntegerField(default=0)
+    fellowship = models.IntegerField(default=0)
+    max_wounds = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name = 'creature'
+        verbose_name_plural = 'creatures'
+
+    def __str__(self) -> str:
+        return f'{self.name}_{self.uuid}'

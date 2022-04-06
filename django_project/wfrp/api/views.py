@@ -46,6 +46,7 @@ class TalentViewSet(viewsets.ModelViewSet):
     lookup_field = "uuid"
     queryset = Talent.objects.all().order_by("-creation_date")
     permission_classes = [IsAuthorOrReadOnly]
+    filterset_fields = ('character__uuid',)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -56,6 +57,7 @@ class AdvancedSkillViewSet(viewsets.ModelViewSet):
     lookup_field = "uuid"
     queryset = AdvancedSkill.objects.all().order_by("-creation_date")
     permission_classes = [IsAuthorOrReadOnly]
+    filterset_fields = ('character__uuid',)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -66,6 +68,7 @@ class ItemViewSet(viewsets.ModelViewSet):
     lookup_field = "uuid"
     queryset = Item.objects.all().order_by("-creation_date")
     permission_classes = [IsAuthorOrReadOnly]
+    filterset_fields = ('character__uuid',)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -76,6 +79,7 @@ class ArmourViewSet(viewsets.ModelViewSet):
     lookup_field = "uuid"
     queryset = Armour.objects.all().order_by("-creation_date")
     permission_classes = [IsAuthorOrReadOnly]
+    filterset_fields = ('character__uuid',)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -86,6 +90,7 @@ class WeaponViewSet(viewsets.ModelViewSet):
     lookup_field = "uuid"
     queryset = Weapon.objects.all().order_by("-creation_date")
     permission_classes = [IsAuthorOrReadOnly]
+    filterset_fields = ('character__uuid',)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -96,6 +101,7 @@ class SpellViewSet(viewsets.ModelViewSet):
     lookup_field = "uuid"
     queryset = Spell.objects.all().order_by("-creation_date")
     permission_classes = [IsAuthorOrReadOnly]
+    filterset_fields = ('character__uuid',)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

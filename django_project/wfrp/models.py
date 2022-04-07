@@ -374,14 +374,13 @@ class CreatureTrait(models.Model):
     name = models.CharField(max_length=32, blank=True, default='')
     uuid = models.UUIDField(default=uuid4, editable=False)
     user = models.ForeignKey(
-        User, related_name='creature_trait', on_delete=models.CASCADE)
+        User, related_name='creature_trait', on_delete=models.CASCADE, blank=True, null=True)
     campaign = models.ForeignKey(
-        Campaign, related_name='creature_trait', on_delete=models.CASCADE)
+        Campaign, related_name='creature_trait', on_delete=models.CASCADE, blank=True, null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
-    # creature = models.ForeignKey(
-    #     PlayableCharacter, related_name='talent', on_delete=models.CASCADE)
     is_optional = models.BooleanField(default=False)
+    is_default = models.BooleanField(default=True, editable=False)
     value = models.CharField(max_length=32, blank=True, default='')
     description = models.TextField(blank=True, default='')
     # effect = models.TextField(blank=True, default='')
@@ -397,9 +396,9 @@ class CreatureTrait(models.Model):
 class Creature(models.Model):
     uuid = models.UUIDField(default=uuid4, editable=False)
     user = models.ForeignKey(
-        User, related_name='creature', on_delete=models.CASCADE)
+        User, related_name='creature', on_delete=models.CASCADE, blank=True, null=True)
     campaign = models.ForeignKey(
-        Campaign, related_name='creature', on_delete=models.CASCADE)
+        Campaign, related_name='creature', on_delete=models.CASCADE, blank=True, null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
     traits = models.ManyToManyField(
@@ -413,7 +412,8 @@ class Creature(models.Model):
         upload_to=settings.MEDIA_ROOT, blank=True, null=True)
     description = models.TextField(blank=True, default='')
     movement = models.IntegerField(default=0)
-
+    is_default = models.BooleanField(default=True, editable=False)
+    
     # stats
     weapon_skill = models.IntegerField(default=0)
     ballistic_skill = models.IntegerField(default=0)

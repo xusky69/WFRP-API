@@ -47,3 +47,4 @@ router.register(prefix=r"creature-traits",
 urlpatterns = [
     path("", include(router.urls)),
 ]
+

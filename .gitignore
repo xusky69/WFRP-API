@@ -130,4 +130,5 @@ dmypy.json
 
 # custom
 postgres-data
+docker_media_root
 django_project/local_env_vars

@@ -106,10 +106,16 @@ class CreatureSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
     campaign = serializers.SlugRelatedField(slug_field='uuid',
                                             queryset=Campaign.objects.all())
+    traits = serializers.SerializerMethodField()
 
     class Meta:
         model = Creature
-        exclude = ['id']
+        exclude = ['id', 'is_default']
+
+    def get_traits(self, inst):
+        traits = inst.traits.all()
+        traits = [item.uuid for item in traits]
+        return traits
 
 
 class CreatureTraitSerializer(serializers.ModelSerializer):
@@ -119,4 +125,4 @@ class CreatureTraitSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CreatureTrait
-        exclude = ['id']
+        exclude = ['id', 'is_default']

@@ -8,7 +8,7 @@ WORKDIR /home/WFRP/
 RUN apt-get update && apt-get -y install sqlite3 libsqlite3-dev nginx
 
 # copy the requirements file to the working directory
-COPY ./requirements.txt .
+COPY ./django_project/requirements.txt .
 
 # install python dependencies
 RUN pip install -r requirements.txt

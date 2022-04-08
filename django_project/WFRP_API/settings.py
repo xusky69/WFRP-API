@@ -15,6 +15,7 @@ from pathlib import Path
 
 # Setup env variables
 from dotenv import load_dotenv
+
 load_dotenv('.env')
 load_dotenv('local_env_vars')
 
@@ -30,9 +31,8 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG') == 'TRUE'
-PRODUCTION = os.getenv('PRODUCTION') == 'TRUE'
-
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '[::1]']
+DOCKER = os.getenv('DOCKER') == 'TRUE'
+HEROKU = os.getenv('HEROKU') == 'TRUE'
 
 # Application definition
 
@@ -85,19 +85,29 @@ WSGI_APPLICATION = 'WFRP_API.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-if PRODUCTION:
-    DATABASES = {  
-        'default': {     
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',       
-            'NAME': os.getenv('DB_NAME'),       
-            'USER': os.getenv('DB_USER'),        
-            'PASSWORD': os.getenv('DB_PSWD'),        
-            'HOST': os.getenv('DB_HOST'),       
-            'PORT': '',    
+if HEROKU:
+    ALLOWED_HOSTS = [os.getenv('HEROKU_URL')]
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
 
+elif DOCKER:
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '[::1]']
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.getenv('DB_NAME'),
+            'USER': os.getenv('DB_USER'),
+            'PASSWORD': os.getenv('DB_PSWD'),
+            'HOST': os.getenv('DB_HOST'),
+            'PORT': '',
+        }
+    }
 else:
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '[::1]']
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -140,8 +150,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR,'assets/')
-STATICFILES_DIRS = [os.path.join(BASE_DIR,'static/')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets/')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 WHITENOISE_MANIFEST_STRICT = False
 
@@ -180,5 +190,3 @@ if os.getenv('CLOUD_MEDIA') == 'TRUE':
     AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
     AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME')
-
-

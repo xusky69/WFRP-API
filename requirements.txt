@@ -10,3 +10,7 @@ django-extensions==3.1.5
 
 pandas==1.4.2
 openpyxl==3.0.9
+
+gunicorn
+psycopg2
+psycopg2-binary

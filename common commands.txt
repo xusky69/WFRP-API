@@ -1,5 +1,5 @@
-### WFRP_API test image building:
-# sudo docker build -t wfrp:test .
+### WFRP_API image building:
+# sudo docker build -t wfrp .
 
 ### delete docker dangling images
 # docker rmi -f $(docker images -f "dangling=true" -q)
@@ -9,7 +9,11 @@
 ### https://stackoverflow.com/questions/68059796/how-to-connect-jupyter-lab-in-my-django-project-to-the-djangos-models
 # python manage.py shell_plus --notebook
 
-### docker-compose common commands
+### docker-compose common setup commands
 docker-compose -f docker-compose up --build
 docker-compose -f exec django python manage.py makemigrations
 docker-compose -f exec django python manage.py migrate
+
+### heroku common commands
+heroku logs --tail --app warhammer-rp
+heroku ps:exec --app warhammer-rp

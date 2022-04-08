@@ -6,11 +6,13 @@ whitenoise==6.0.0
 Pillow==9.0.1
 django-storages==1.12.3
 boto3==1.21.31
-django-extensions==3.1.5
 
+# db population
+django-extensions==3.1.5
 pandas==1.4.2
 openpyxl==3.0.9
 
-gunicorn
-psycopg2
-psycopg2-binary
+# deployment
+gunicorn==20.1.0
+psycopg2==2.9.3
+psycopg2-binary==2.9.3

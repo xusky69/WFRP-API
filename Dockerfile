@@ -12,16 +12,16 @@ COPY ./django_project/requirements.txt .
 
 # install python dependencies
 RUN pip install -r requirements.txt
-RUN pip install gunicorn
-RUN pip install psycopg2
-RUN pip install psycopg2-binary
+# RUN pip install gunicorn
+# RUN pip install psycopg2
+# RUN pip install psycopg2-binary
 
 # copy the project to the working directory
 ADD ./django_project/ .
 
 # remove logs, dev db and old env vars
-RUN rm -rf .env db.sqlite3 wfrp/migrations logs reports song_data
-RUN mkdir -p media_root assets static
+RUN rm -rf .env db.sqlite3 wfrp/migrations logs
+RUN mkdir -p media assets static
 
 # setup python environment variables
 ENV PYTHONDONTWRITEBYTECODE 1

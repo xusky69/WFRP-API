@@ -89,11 +89,14 @@ if HEROKU:
     ALLOWED_HOSTS = [os.getenv('HEROKU_URL')]
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.getenv('DB_NAME'),
+            'USER': os.getenv('DB_USER'),
+            'PASSWORD': os.getenv('DB_PSWD'),
+            'HOST': os.getenv('DB_HOST'),
+            'PORT': os.getenv('DB_PORT'),
         }
     }
-
 elif DOCKER:
     ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '[::1]']
     DATABASES = {
@@ -106,6 +109,7 @@ elif DOCKER:
             'PORT': '',
         }
     }
+
 else:
     ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '[::1]']
     DATABASES = {

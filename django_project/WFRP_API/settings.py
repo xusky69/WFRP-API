@@ -82,7 +82,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'WFRP_API.wsgi.application'
 
 
-# Database
+# Database & allowed hosts
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 if HEROKU:
@@ -97,6 +97,7 @@ if HEROKU:
             'PORT': os.getenv('DB_PORT'),
         }
     }
+
 elif DOCKER:
     ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '[::1]']
     DATABASES = {
@@ -194,3 +195,5 @@ if os.getenv('CLOUD_MEDIA') == 'TRUE':
     AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
     AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME')
+    AWS_QUERYSTRING_EXPIRE = 60*60*24
+    AWS_QUERYSTRING_AUTH= False

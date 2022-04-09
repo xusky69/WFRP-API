@@ -16,4 +16,4 @@ docker-compose -f exec django python manage.py migrate
 
 ### heroku common commands
 heroku logs --tail --app warhammer-rp
-heroku ps:exec --app warhammer-rp
+heroku run bash --app warhammer-rp // DO NOT USE EXEC

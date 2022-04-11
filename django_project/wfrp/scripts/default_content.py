@@ -43,9 +43,9 @@ def addDefaultCharacter(user: User,
                                                campaign=campaign,
                                                **char_data)
         character_instance.save()
-        character_instance.character_avatar.save(avatar, UploadedFile(
+        character_instance.character_avatar.save(str(character_instance.uuid) + '_avatar.png', UploadedFile(
             file=open(avatar_path, 'rb'), content_type='image/png'))
-        character_instance.character_picture.save(full_pic, UploadedFile(
+        character_instance.character_picture.save(str(character_instance.uuid) + '_full.png', UploadedFile(
             file=open(full_pic_path, 'rb'), content_type='image/png'))
         # Yep, I know these can be generalized into a single func:
         # create related items
@@ -113,7 +113,7 @@ def addDefaultCampaign(campaign_master: User,
                             name=campaign_name,
                             description=campaign_description.strip())
         campaign.save()
-        campaign.cover_image.save(f'ubersreik.jpg', UploadedFile(
+        campaign.cover_image.save(f'{str(campaign.uuid)}_cover.jpg', UploadedFile(
             file=open(os.path.join(EXAMPLE_MEDIA_ROOT, 'ubersreik.jpg'), 'rb'), content_type='image/jpg'))
     else:
         campaign = Campaign.objects.get(name=campaign_name)

@@ -4,7 +4,6 @@ from django.conf import settings
 
 from users.models import User
 
-
 class Campaign(models.Model):
     name = models.CharField(max_length=32, blank=True, default='')
     cover_image = models.ImageField(
@@ -48,6 +47,7 @@ class JournalEntry(models.Model):
 
 
 class PlayableCharacter(models.Model):
+    name = models.CharField(max_length=32)
     uuid = models.UUIDField(default=uuid4, editable=False, unique=True)
     user = models.ForeignKey(
         User, related_name='character', on_delete=models.CASCADE)
@@ -57,7 +57,6 @@ class PlayableCharacter(models.Model):
     last_updated = models.DateTimeField(auto_now=True)
 
     # general stuff
-    name = models.CharField(max_length=32)
     character_avatar = models.ImageField(
         upload_to=settings.MEDIA_ROOT, blank=True, null=True)
     character_picture = models.ImageField(
@@ -414,7 +413,7 @@ class Creature(models.Model):
     description = models.TextField(blank=True, default='')
     movement = models.IntegerField(default=0)
     is_default = models.BooleanField(default=True, editable=False)
-    
+
     # stats
     weapon_skill = models.IntegerField(default=0)
     ballistic_skill = models.IntegerField(default=0)
@@ -431,6 +430,31 @@ class Creature(models.Model):
     class Meta:
         verbose_name = 'creature'
         verbose_name_plural = 'creatures'
+        
 
     def __str__(self) -> str:
         return f'{self.name}_{self.uuid}'
+
+#########################################################
+######################## SIGNALS ########################
+#########################################################
+
+from django.dispatch import receiver
+from django.db.models.signals import pre_delete
+
+@receiver(pre_delete, sender=Campaign)
+def delete_campaign_media(sender, instance, **kwargs):
+    instance.cover_image.delete(save=False)
+
+@receiver(pre_delete, sender=PlayableCharacter)
+def delete_character_media(sender, instance, **kwargs):
+    instance.character_avatar.delete(save=False)
+    instance.character_picture.delete(save=False)
+
+@receiver(pre_delete, sender=Creature)
+def delete_creature_media(sender, instance, **kwargs):
+    instance.creature_picture.delete(save=False)
+
+@receiver(pre_delete, sender=Memory)
+def delete_memory_media(sender, instance, **kwargs):
+    instance.memory_picture.delete(save=False)

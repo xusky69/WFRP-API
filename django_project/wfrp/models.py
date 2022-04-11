@@ -11,7 +11,7 @@ class Campaign(models.Model):
         upload_to=settings.MEDIA_ROOT, blank=True, null=True)
     master = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name='campaigns', on_delete=models.CASCADE)
-    uuid = models.UUIDField(default=uuid4, editable=False)
+    uuid = models.UUIDField(default=uuid4, editable=False, unique=True)
     description = models.TextField(
         default="Enter a description for your campaign")
     creation_date = models.DateTimeField(auto_now_add=True)
@@ -27,7 +27,7 @@ class Campaign(models.Model):
 
 class JournalEntry(models.Model):
     name = models.CharField(max_length=32, blank=True, default='')
-    uuid = models.UUIDField(default=uuid4, editable=False)
+    uuid = models.UUIDField(default=uuid4, editable=False, unique=True)
 
     user = models.ForeignKey(User, related_name='user',
                              on_delete=models.CASCADE)
@@ -48,7 +48,7 @@ class JournalEntry(models.Model):
 
 
 class PlayableCharacter(models.Model):
-    uuid = models.UUIDField(default=uuid4, editable=False)
+    uuid = models.UUIDField(default=uuid4, editable=False, unique=True)
     user = models.ForeignKey(
         User, related_name='character', on_delete=models.CASCADE)
     campaign = models.ForeignKey(
@@ -196,7 +196,7 @@ class PlayableCharacter(models.Model):
 
 class Spell(models.Model):
     name = models.CharField(max_length=32, blank=True, default='')
-    uuid = models.UUIDField(default=uuid4, editable=False)
+    uuid = models.UUIDField(default=uuid4, editable=False, unique=True)
     user = models.ForeignKey(User, related_name='spell',
                              on_delete=models.CASCADE)
     creation_date = models.DateTimeField(auto_now_add=True)
@@ -218,7 +218,7 @@ class Spell(models.Model):
 
 class Talent(models.Model):
     name = models.CharField(max_length=32, blank=True, default='')
-    uuid = models.UUIDField(default=uuid4, editable=False)
+    uuid = models.UUIDField(default=uuid4, editable=False, unique=True)
     user = models.ForeignKey(
         User, related_name='talent', on_delete=models.CASCADE)
     creation_date = models.DateTimeField(auto_now_add=True)
@@ -251,7 +251,7 @@ class AdvancedSkill(models.Model):
         ('fellowship', 'fellowship'),
     ]
     name = models.CharField(max_length=32, blank=True, default='')
-    uuid = models.UUIDField(default=uuid4, editable=False)
+    uuid = models.UUIDField(default=uuid4, editable=False, unique=True)
     user = models.ForeignKey(
         User, related_name='advanced_skill', on_delete=models.CASCADE)
     creation_date = models.DateTimeField(auto_now_add=True)
@@ -280,7 +280,7 @@ class Item(models.Model):
                     ('trinket', 'trinket'),
                     ('other', 'other')]
     name = models.CharField(max_length=32, blank=True, default='')
-    uuid = models.UUIDField(default=uuid4, editable=False)
+    uuid = models.UUIDField(default=uuid4, editable=False, unique=True)
     user = models.ForeignKey(User, related_name='item',
                              on_delete=models.CASCADE)
     creation_date = models.DateTimeField(auto_now_add=True)
@@ -302,7 +302,7 @@ class Item(models.Model):
 
 class Armour(models.Model):
     name = models.CharField(max_length=32, blank=True, default='')
-    uuid = models.UUIDField(default=uuid4, editable=False)
+    uuid = models.UUIDField(default=uuid4, editable=False, unique=True)
     user = models.ForeignKey(User, related_name='armor_piece',
                              on_delete=models.CASCADE)
     creation_date = models.DateTimeField(auto_now_add=True)
@@ -326,7 +326,7 @@ class Armour(models.Model):
 
 class Weapon(models.Model):
     name = models.CharField(max_length=32, blank=True, default='')
-    uuid = models.UUIDField(default=uuid4, editable=False)
+    uuid = models.UUIDField(default=uuid4, editable=False, unique=True)
     user = models.ForeignKey(User, related_name='weapon',
                              on_delete=models.CASCADE)
     creation_date = models.DateTimeField(auto_now_add=True)
@@ -351,7 +351,7 @@ class Weapon(models.Model):
 
 
 class Memory(models.Model):
-    uuid = models.UUIDField(default=uuid4, editable=False)
+    uuid = models.UUIDField(default=uuid4, editable=False, unique=True)
     user = models.ForeignKey(
         User, related_name='memory', on_delete=models.CASCADE)
     campaign = models.ForeignKey(
@@ -373,7 +373,7 @@ class Memory(models.Model):
 
 class CreatureTrait(models.Model):
     name = models.CharField(max_length=32, blank=True, default='')
-    uuid = models.UUIDField(default=uuid4, editable=False)
+    uuid = models.UUIDField(default=uuid4, editable=False, unique=True)
     user = models.ForeignKey(
         User, related_name='creature_trait', on_delete=models.CASCADE, blank=True, null=True)
     campaign = models.ForeignKey(
@@ -395,7 +395,7 @@ class CreatureTrait(models.Model):
 
 
 class Creature(models.Model):
-    uuid = models.UUIDField(default=uuid4, editable=False)
+    uuid = models.UUIDField(default=uuid4, editable=False, unique=True)
     user = models.ForeignKey(
         User, related_name='creature', on_delete=models.CASCADE, blank=True, null=True)
     campaign = models.ForeignKey(

@@ -12,10 +12,12 @@ from wfrp.scripts.default_content import (addDefaultCampaign,
 # os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 # django.setup()
 
+
 def run():
 
     EXAMPLE_MEDIA_ROOT = 'wfrp/example_media/'
 
+    Campaign.objects.all().delete()
     PlayableCharacter.objects.all().delete()
     Item.objects.all().delete()
     Armour.objects.all().delete()
@@ -27,14 +29,14 @@ def run():
     Creature.objects.all().delete()
     CreatureTrait.objects.all().delete()
 
-    users = [{'name': 'ricardo'},
-             {'name': 'danna'},
-             {'name': 'omar'},
-             {'name': 'caceres'},
-             {'name': 'aleja'},
-             {'name': 'elliot'},
-             {'name': 'felipe'},
-             {'name': 'velez'}]
+    users = [
+        {'name': 'gunnar', 'character': 'GUNNAR'},
+        {'name': 'else', 'character': 'ELSE'},
+        {'name': 'amris', 'character': 'AMRIS'},
+        {'name': 'ferdinand', 'character': 'FERDINAND'},
+        {'name': 'molrella', 'character': 'MOLRELLA'},
+        {'name': 'master', 'character': ''}
+    ]
 
     for user in users:
         user_instance = User.objects.create_user(username=user['name'],
@@ -46,28 +48,30 @@ def run():
     admin.is_staff = True
     admin.save()
 
-    campaign_master = User.objects.get(username='velez')
+    campaign_master = User.objects.get(username='master')
     campaign_name = 'Haciendo la ronda'
     campaign_description = '''
-    Los Personajes, que paseaban por el mercado de Ubersreik, se ven metidos en un tumulto y, más tarde, se les acusa de instigarlo. Misteriosamente, una abogada local interviene y convence al juez responsable del caso de que permita a los Personajes que paguen su ‘deuda’ trabajando como miembros de la Guardia.
+The Characters, strolling through the Ubersreik marketplace, are caught up in a riot and later charged with instigating it. Mysteriously, a local lawyer intervenes and convinces the judge in charge of the case to allow the Characters to pay their 'debt' by working as members of the Guard.
 
-    Pronto, el grupo se ve patrullando las calles de Ubersreik con Rudi Klumpenklug, un sargento de la guardia absolutamente corrupto. Los guardias temporales se ven expuestos a diversos delitos, ninguno de los cuales Klumpenklug muestra interés alguno por perseguir, dejando que los Personajes resuelvan, ignoren o incluso exploten cada situación como prefieran.
+Soon, the group finds themselves patrolling the streets of Ubersreik with Rudi Klumpenklug, a thoroughly corrupt sergeant of the Guard. The temporary guards are exposed to various crimes, none of which Klumpenklug shows any interest in pursuing, leaving the Characters to resolve, ignore or even exploit each situation as they prefer.
 
-    Por último, Ilse Fassenwütend se pone en contacto con el grupo. Fassenwütend es una guarda de caminos, que afirma ser capaz de hacer que la sentencia de los Personajes sea conmutada si le ayudan a escoltar a un criminal al lugar donde debe ser ejecutado.
+Finally, Ilse Fassenwütend contacts the group. Fassenwütend is a road guard, who claims to be able to have the Characters' sentences commuted if they help her escort a criminal to the place where he is to be executed.
 
-    Sin embargo, no será tarea fácil. El grupo tendrá ante sí una noche horrorosa, llevando a un hombre aterrorizado a través de unas calles extrañamente alteradas mientras Morrslieb, la luna del Caos, está en cuarto creciente (y por lo tanto brilla en el cielo) y sectarios mutantes los atacan por todos lados ¿Conseguirán los Personajes proteger al hombre, que afirma ser inocente, para luego llevarlo hasta el cadalso? ¿O elegirán un camino distinto?
-    '''
+However, it will not be an easy task. The group will have a horrific night ahead of them, leading a terrified man through strangely altered streets while Morrslieb, the Chaos moon, is in the crescent (and therefore shining in the sky) and mutant cultists attack them from all sides. Will the Characters manage to protect the man, who claims to be innocent, and then take him to the scaffold? Or will they choose a different path?
+'''
 
     campaign = addDefaultCampaign(campaign_master,
                                   campaign_name,
                                   campaign_description,
                                   EXAMPLE_MEDIA_ROOT)
 
-    user = User.objects.filter(username='ricardo')[0]
-    campaign = Campaign.objects.all()[0]
-    addDefaultCharacter(user=user, campaign=campaign,
-                        character_name='GUNNAR', EXAMPLE_MEDIA_ROOT=EXAMPLE_MEDIA_ROOT)
-    character_instance = PlayableCharacter.objects.filter(
-        name='Gunnar Hrolfsson')[0]
+    for user_entry in users:
+        if len(user_entry['character']) > 0:
+            user = User.objects.filter(username=user_entry['name'])[0]
+            campaign = Campaign.objects.all()[0]
+            addDefaultCharacter(user=user,
+                                campaign=campaign,
+                                character_name=user_entry['character'],
+                                EXAMPLE_MEDIA_ROOT=EXAMPLE_MEDIA_ROOT)
 
     addDefaultCreatures(EXAMPLE_MEDIA_ROOT)

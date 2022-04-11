@@ -1,4 +1,5 @@
 import os
+from numpy import char
 
 import pandas as pd
 from django.core.files.uploadedfile import UploadedFile
@@ -31,10 +32,9 @@ def addDefaultCharacter(user: User,
         # create default character
         char_data = pd.read_excel(DEFAULT_CHARACTER_PATH)
         char_data = char_data[char_data['character'] == character_name]
-        char_data = pd.read_excel(DEFAULT_CHARACTER_PATH)
-        avatar = str(char_data['avatar'][0])
+        avatar = str(char_data['avatar'].iloc[0])
         avatar_path = os.path.join(EXAMPLE_MEDIA_ROOT, avatar)
-        full_pic = str(char_data['full_pic'][0])
+        full_pic = str(char_data['full_pic'].iloc[0])
         full_pic_path = os.path.join(EXAMPLE_MEDIA_ROOT, full_pic)
         char_data = char_data.drop(
             labels=['character', 'avatar', 'full_pic'], axis=1)

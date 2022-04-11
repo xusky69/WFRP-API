@@ -138,6 +138,7 @@ class PlayableCharacter(models.Model):
     intimidate = models.IntegerField(default=0)
     intuition = models.IntegerField(default=0)
     leadership = models.IntegerField(default=0)
+    melee = models.IntegerField(default=0)
     melee_basic = models.IntegerField(default=0)
     navigation = models.IntegerField(default=0)
     outdoor_survival = models.IntegerField(default=0)

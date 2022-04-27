@@ -17,31 +17,31 @@ def run():
 
     EXAMPLE_MEDIA_ROOT = 'wfrp/example_media/'
 
-    # Campaign.objects.all().delete()
-    # PlayableCharacter.objects.all().delete()
-    # Item.objects.all().delete()
-    # Armour.objects.all().delete()
-    # Talent.objects.all().delete()
-    # Spell.objects.all().delete()
-    # AdvancedSkill.objects.all().delete()
-    # Weapon.objects.all().delete()
-    # User.objects.all().delete()
-    # Creature.objects.all().delete()
-    # CreatureTrait.objects.all().delete()
+    Campaign.objects.all().delete()
+    PlayableCharacter.objects.all().delete()
+    Item.objects.all().delete()
+    Armour.objects.all().delete()
+    Talent.objects.all().delete()
+    Spell.objects.all().delete()
+    AdvancedSkill.objects.all().delete()
+    Weapon.objects.all().delete()
+    User.objects.all().delete()
+    Creature.objects.all().delete()
+    CreatureTrait.objects.all().delete()
 
     ### Why? calling the delete() method in bulk does not always call the overriden method
     ### hence, doesn't delete the remote S3 images
-    [item.delete() for item in Campaign.objects.all()]
-    [item.delete() for item in PlayableCharacter.objects.all()]
-    [item.delete() for item in Item.objects.all()]
-    [item.delete() for item in Armour.objects.all()]
-    [item.delete() for item in Talent.objects.all()]
-    [item.delete() for item in Spell.objects.all()]
-    [item.delete() for item in AdvancedSkill.objects.all()]
-    [item.delete() for item in Weapon.objects.all()]
-    [item.delete() for item in User.objects.all()]
-    [item.delete() for item in Creature.objects.all()]
-    [item.delete() for item in CreatureTrait.objects.all()]
+    # [item.delete() for item in Campaign.objects.all()]
+    # [item.delete() for item in PlayableCharacter.objects.all()]
+    # [item.delete() for item in Item.objects.all()]
+    # [item.delete() for item in Armour.objects.all()]
+    # [item.delete() for item in Talent.objects.all()]
+    # [item.delete() for item in Spell.objects.all()]
+    # [item.delete() for item in AdvancedSkill.objects.all()]
+    # [item.delete() for item in Weapon.objects.all()]
+    # [item.delete() for item in User.objects.all()]
+    # [item.delete() for item in Creature.objects.all()]
+    # [item.delete() for item in CreatureTrait.objects.all()]
 
     users = [
         {'name': 'gunnar', 'character': 'GUNNAR'},
@@ -63,7 +63,7 @@ def run():
     admin.save()
 
     campaign_master = User.objects.get(username='master')
-    campaign_name = 'Haciendo la ronda'
+    campaign_name = 'Doing the rounds'
     campaign_description = '''
 The Characters, strolling through the Ubersreik marketplace, are caught up in a riot and later charged with instigating it. Mysteriously, a local lawyer intervenes and convinces the judge in charge of the case to allow the Characters to pay their 'debt' by working as members of the Guard.
 

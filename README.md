@@ -1,6 +1,6 @@
 # WFRP-APP
 
-A befautiful web app for managing D&D-like tabletop campaigns based off the Warhammer Fantasy universe.
+A web app for managing D&D-like tabletop campaigns based off the Warhammer Fantasy universe.
 
 ## Description
 
@@ -8,18 +8,20 @@ WFRP-APP is a Progressive Web App (**PWA**) **frontend** **+** fully-fledged **b
 
 ### Main features:
 - **Blazing-fast** frontend built on top of Next.js + TailwindCSS
-- Native-like **PWA** experience made possible by Next.js PWA template
+- Native-like **PWA** experience made possible by the excellent Next.js PWA template, with offline support
 - Beautiful user experience thanks to the amazing [daisyUI](https://daisyui.com/) component library
-- Fully-featured Django **REST API** for performing CRUD operations on several relational data models described by the WFRP 4eth edition rulebook such as **Campaigns, Characters, Spells, Items, Enemies, etc**.
-- Integration with **AWS S3** (via django-storages) for storing & serving **user media** such as character avatars and bestiary illustrations.
+- Fully-featured Django **REST API** for performing CRUD operations on several relational data models described by the WFRP 4eth edition rulebook such as **Campaigns, Characters, Spells, Items, Enemies, etc**; With support for querystring filtering
+- Integration with **AWS S3** (via django-storages) for storing & serving **user media** such as character avatars and bestiary illustrations
 - Complete **dungeon-master panel** thanks to the Django admin panel
-- Full **docker** & compose support so you can host your own campaigns locally.
 - Secure **stateless authentication** handled via [iron-session](https://github.com/vvo/iron-session)
+- Full **docker** & compose support so you can host your own campaigns locally
 
-### To be done
+
+## To be done
 - Dungeon-master panel on the frontend side
 - Desktop UI layout support
 - Dice rolling tool
+- Skill-check tool
 
 ## Setting up development environment
 1. Clone repo & cd to root of the project
@@ -45,17 +47,24 @@ python manage.py runserver
 ```
 
 ## Setting up docker environment
+TODO
 
 ## Some useful information:
 - main app is wfrp
 - url filtering is setup inside ViewSets using django-filters
 
 ## Environment variables
+TODO
 
 ## F.A.Q.
+why no typescript support?
+do you plan on doing this for D&D?
 
 ## About this project
 
-This project arose out of the need to provide our dungeon master an easy way to manage our WFRP campaign. 
+This project arose out of the need to provide our dungeon master an easy way to manage our WFRP 4th edition campaign. 
 
-It eventually morphed into a native-like PWA that can be used by any party of adventurers who might want to simplify their adventures on the  
+It eventually morphed into a native-like PWA + full backend that can be used by any party of adventurers who might want to simplify their adventures in the Old World. 
+
+## Disclaimer
+prohibiting use in commercial apps goes here.

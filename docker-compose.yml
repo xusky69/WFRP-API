@@ -15,15 +15,15 @@ services:
       context: ./WFRP-Front
       dockerfile: Dockerfile
     # ports:
-      # - "3000:3000"
+    #   - "3000:3000"
     network_mode: "host"
     depends_on:
-      - "django"
+      - "nginx"
   postgres:
     image: postgres
     environment:
       POSTGRES_USER: djangouser
-      POSTGRES_PASSWORD: obo69
+      POSTGRES_PASSWORD: obo696
       POSTGRES_DB: djangodb
     volumes:
       - ./postgres-data:/var/lib/postgresql/data 
@@ -32,6 +32,6 @@ services:
     volumes:
       - ./docker_media_root:/home/WFRP/media
     ports:
-      - 8000:80
+      - 8000:8000
     depends_on:
       - "django"

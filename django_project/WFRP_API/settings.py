@@ -99,7 +99,7 @@ if HEROKU:
     }
 
 elif DOCKER:
-    ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '[::1]']
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'nginx', '[::1]']
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',

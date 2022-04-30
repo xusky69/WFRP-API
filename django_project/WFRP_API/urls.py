@@ -26,3 +26,5 @@ urlpatterns = [
     path('', include('wfrp.api.urls'))
 ]
 
+if not settings.CLOUD_MEDIA:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

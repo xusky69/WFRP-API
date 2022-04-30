@@ -78,6 +78,7 @@ The following environment variables are sentitive and should be stored in a `dja
 
 | Name | Description |
 | ------------- | ------------- |
+| DJANGO_SECRET_KEY | Django secret key, you can use https://miniwebtool.com/django-secret-key-generator/ to generate one  |
 | AWS_ACCESS_KEY_ID | AWS S3 credential, used by django-storages if `CLOUD_MEDIA=='TRUE'`  |
 | AWS_S3_REGION_NAME | AWS S3 bucket region, used by django-storages if `CLOUD_MEDIA=='TRUE'` |
 | AWS_SECRET_ACCESS_KEY | AWS S3 credential, used by django-storages if `CLOUD_MEDIA=='TRUE'` |
@@ -101,22 +102,34 @@ loaded from `WFRP_FRONT/.env.development` by the local dev server, from `WFRP_FR
 ```
 python3 -m venv venv
 source venv/bin/activate
+cd django_project/
 pip3 install -r requirements.txt
 ```
-4. cd to `django_project` and create a symlink between dev_env_vars and .env file (or just copy and rename):
+4. Create a symlink between dev_env_vars and .env file (or just copy and rename):
 ```
 ln dev_env_vars .env
 ```
 5. create initial migrations
 ```
+python manage.py makemigrations users
 python manage.py makemigrations wfrp
 python manage.py migrate
 ```
-6. populate db with default data
+6. open dev_env_vars file and set:
+```
+CLOUD_MEDIA=FALSE
+``` 
+and then populate db with default data
 ```
 python manage.py runscript wfrp.scripts.populate_db
 ```
-7. run development server
+7. create a file named `local_env_vars` and setup the `DJANGO_SECRET_KEY` environment variable, you can use https://miniwebtool.com/django-secret-key-generator/ to generate one.
+e.g:
+```
+### django_project/local_env_vars
+DJANGO_SECRET_KEY='mn8db#9tx6&y*!6=*+v_%+$ga#6zdz7t_dfd^ui(d$bgd1)5cf'
+```
+8. run development server
 ```
 python manage.py runserver
 ```
@@ -133,7 +146,7 @@ git clone https://github.com/xusky69/WFRP-Front .
 2. run `npm install` to install the required dependencies
 3. run `npm run dev` to run the development server
 
-The frontend will be server at localhost:3000
+The frontend will be served at localhost:3000
 
 Remember that anyone connected to your wifi network should be able to connect to the frontend at `<your_pc_local_ip>:3000`, so you can host your campaign locally.
 
@@ -144,7 +157,7 @@ The docker environment is ideal for testing production-like environments; and al
 1. Clone the backend repo & cd to root of the project
 2. cd to the `WFRP-Front` located in the root of the backend repo and clone the frontend repo in the root of such folder 
 ```
-git clone https://github.com/xusky69/WFRP-FrontREPO_URL .
+git clone https://github.com/xusky69/WFRP-Front .
 ```
 3. build docker images and compose-up:
 ```

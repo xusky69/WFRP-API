@@ -85,7 +85,7 @@ The following environment variables are sentitive and should be stored in a `dja
 
 ### Frontend
 
-loaded from `WFRP_FRONT/.env.development` by the local dev server, from `WFRP_FRONT/.env.production` by the local build server and by the project environmnent variables when deploying to vercel.
+loaded from `WFRP_FRONT/.env.development` by the local dev server, from `WFRP_FRONT/.env.production` by the local build server, created during image building by the frontend Dockerfile and defined by the project environmnent variables when deploying to vercel.
 
 | Name | Description |
 | ------------- | ------------- |

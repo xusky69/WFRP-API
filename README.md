@@ -1,5 +1,3 @@
-![wfrp-app-icon](https://i.imgur.com/7cXFDwJ.png)
-
 # WFRP-APP
 ---
 
@@ -47,12 +45,58 @@ by order of priority:
 
 After all the above is done, the idea is to release the app on a powerful-enough production environment, ideally financed by a patreon/crowdsourcing strategy, so that all users can access the app for free directly from one single url.
 
+## F.A.Q.
+---
+**Q:** Do you plan on doing this for D&D? 
+**A:** Would be cool but would need some help! I'm currently learning the D&D 5th edition systems
+
+**Q:** Why no typescript? 
+**A:** Had some issues with iron-session ts support during early stages of this project, so I stuck with js for the meantime
+
+
+## Environment variables
+---
+
+### Backend
+
+| Name | Description |
+| ------------- | ------------- |
+| TIME_ZONE | server timezone |
+| DEBUG | django debug flag |
+| DOCKER | flag used in `settings.py` to enable the docker postgres db |
+| HEROKU | flag used in `settings.py` to enable the heroku postgres db |
+| CLOUD_MEDIA | flag used in `settings.py` to enable the AWS S3 media storage |
+| DB_NAME | postgres DB name. Used by docker & heroku |
+| DB_USER | postgres username. Used by docker & heroku |
+| DB_PSWD | postgres password. Used by docker & heroku |
+| DB_HOST | postgres DB host. Used by docker & heroku |
+| DB_PORT | postgres DB port. Used by heroku |
+| HEROKU_URL | used in `settings.py` to add the heroku url to ALLOWED_HOSTS |
+| PROJECT_PATH | used by the heroku subdir buildpack to point the location of the django project |
+
+The following environment variables are sentitive and should be stored in a `django_project/local_env_vars` file for development or directly in your cloud provider settings when deploying the project.
+
+| Name | Description |
+| ------------- | ------------- |
+| AWS_ACCESS_KEY_ID | AWS S3 credential, used by django-storages if `CLOUD_MEDIA=='TRUE'`  |
+| AWS_S3_REGION_NAME | AWS S3 bucket region, used by django-storages if `CLOUD_MEDIA=='TRUE'` |
+| AWS_SECRET_ACCESS_KEY | AWS S3 credential, used by django-storages if `CLOUD_MEDIA=='TRUE'` |
+| AWS_STORAGE_BUCKET_NAME | AWS S3 bucket name, used by django-storages if `CLOUD_MEDIA=='TRUE'` |
+
+### Frontend
+
+loaded from `WFRP_FRONT/.env.development` by the local dev server, from `WFRP_FRONT/.env.production` by the local build server and by the project environmnent variables when deploying to vercel.
+
+| Name | Description |
+| ------------- | ------------- |
+| NEXT_PUBLIC_API_URL | REST API url |
+
 ## Setting up dev environment
 ---
 ### Setting up the backend
 
 1. Clone the backend repo & cd to root of the project
-2. Make sure you have installed a modern python 3 in your current environment
+2. Make sure you have installed a modern python 3 (>3.7) in your current environment
 3. Create `venv` or use virtual environment manager of your preference (conda, pyenv, etc...), then install dependencies. eg:
 ```
 python3 -m venv venv
@@ -78,11 +122,13 @@ python manage.py runserver
 ```
 The backend will be served at localhost:8000
 
+**Warning:** database data is stored at volume `django_project/db.sqlite3` & user media at volume `django_project/media`. If you delete any of these, you will lose your campaign data.
+
 ### Setting up the frontend
 
 1. cd to the `WFRP-Front` located in the root of the backend repo and clone the frontend repo in the root of such folder 
 ```
-git clone https://github.com/xusky69/WFRP-FrontREPO_URL .
+git clone https://github.com/xusky69/WFRP-Front .
 ```
 2. run `npm install` to install the required dependencies
 3. run `npm run dev` to run the development server
@@ -90,8 +136,6 @@ git clone https://github.com/xusky69/WFRP-FrontREPO_URL .
 The frontend will be server at localhost:3000
 
 Remember that anyone connected to your wifi network should be able to connect to the frontend at `<your_pc_local_ip>:3000`, so you can host your campaign locally.
-
-**Warning:** database data is stored at volume `django_project/db.sqlite3` & user media at volume `django_project/media`. If you delete any of these, you will lose your campaign data.
 
 ## Setting up docker environment
 ---
@@ -125,16 +169,25 @@ Remember that anyone connected to your wifi network should be able to connect to
 
 **Warning:** database data is stored at volume `./postgres_data` & user media at volume `docker_media_root`. If you delete any of these folders, you will lose your campaign data.
 
-## Deploying to production
+## Deploying the project
 ---
-The project can be deployed using the free tiers of Vercel, Heroku + Heroku Postgres and AWS S3. 
+This project can be deployed using the free tiers of Vercel, Heroku + Heroku Postgres and AWS S3. 
 
-Environment variables are prepared in both the frontend and backend in order to transition seamlessly from the development environment to a production one that uses the aforementioned services. 
+Environment variables are prepared in both the frontend and backend in order to transition seamlessly from the development environment to a production one that uses the aforementioned services (read the environment variables section)
 
 An example architecture of a production environment is the following:
 
 ![wfrp-app-arch](https://i.imgur.com/JAFwPXD.png)
 
+**Useful info**
+- When deploying the API to heroku, you must use the `heroku/python` and the `heroku-subdir` (https://github.com/timanovsky/subdir-heroku-buildpack.git) buildpacks, then setup the required environment variables in the heroku ui.
+- When deploying the frontend to Vercel, remember to setup the `NEXT_PUBLIC_API_URL` environment variable in the Vercel UI. Also, **you must add the Vercel project url** to the `domains` array in your `next.config.js` file, e.g:
+```
+  images: {
+    domains: ['localhost', 'wfrp-api.s3.amazonaws.com'],
+  },
+```
+- In order to populate the heroku db with the default data, you must connect to the API dyno via `heroku run bash --app YOUR_APP_NAME` and manually run the django script
 
 ## How to use
 ---
@@ -144,23 +197,11 @@ After populating the database with the default data:
 3. users can login via the app frontend, served at `localhost:3000`. They must input their user data (defined by you in the dungeon master panel) and the campaign uuid.
 4. Enjoy!
 
-<!-- ## Environment variables
----
-To be documented -->
-
-## F.A.Q.
----
-**Q:** Do you plan on doing this for D&D? 
-**A:** Would be cool but would need some help! I'm currently learning the D&D 5th edition systems
-
-**Q:** Why no typescript? 
-**A:** Had some issues with iron-session ts support during early stages of this project, so I stuck with js for the meantime
-
 ## About this project
 ---
 This project arose out of the need to provide our dungeon master an easy way to manage our WFRP 4th edition campaign. 
 
-It eventually morphed into a web app that can be used by any party of adventurers who might want to simplify their adventures in the Old World. 
+It eventually morphed into a web tool that can be used by any party of adventurers who might need some help during their adventures in the grim darkness of the Old World. 
 
 ## Contributing
 ---
